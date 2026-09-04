@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Text } from '@react-three/drei';
 
-// The API endpoint – change this to your Fedora server's IP:port
-const API_URL = import.meta.env.VITE_API_URL || 'http://YOUR_SERVER_IP:8000/api/boot-logs?limit=60';
+const API_URL = 'http://192.168.1.172:8000/api/boot-logs?limit=60';
 
 function LogLine({ message, index }) {
   const yPosition = 5 - index * 0.4;
@@ -22,7 +21,7 @@ function App() {
   useEffect(() => {
     fetch(API_URL)
       .then((res) => {
-        if (!res.ok) throw new Error();
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
         return res.json();
       })
       .then((data) => {
